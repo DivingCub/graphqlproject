@@ -1,0 +1,65 @@
+type Query{
+    events:[Event!]!
+    users:[User!]!
+    login(loginInput:LoginInput!) :AuthData!
+#    括号表示说，返回值是数组，或者是列表类型
+#    外面加一个！表明，必须要有一个数组进行返回 , 感叹号！，表示这个事情是必须得，requirement，没有她就不行
+
+}
+
+
+
+
+input LoginInput{
+    email:String!
+    password:String!
+
+}
+
+type Mutation{
+    createEvent(eventInput:EventInput!): Event!
+    createUser(userInput:UserInput):User!
+
+#    往里面添加的东西，id是自动生成的，
+#    name这块的搭配，说明，输入的这段应该是一个字符串
+#    后面最后一个，说明返回的值应该也是一个String的字符
+}
+
+input EventInput {
+    title: String!
+    description: String!
+    price: Float!
+    date: String!
+    creatorId: Int!
+}
+
+type Event{
+    id: ID!
+    title:String!
+    description:String!
+    price:Float!
+    date: String!
+    creator:User!
+#    没有Date类型，只能用拓展，后续具体再说
+}
+
+input UserInput{
+    email:String!
+    password:String!
+}
+
+
+type User{
+    id: ID!
+    email:String!
+    password:String
+    createdEvents:[Event!]
+
+}
+
+type AuthData{
+    userId: ID!
+    token: String!
+    tokenExpiration: Int!
+
+}
